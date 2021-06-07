@@ -32,6 +32,22 @@
       {{ model3 }}
       <button @click="setSelection">Set selection</button>
     </div>
+
+    <p>Example: Restore on load</p>
+    <div>
+      <vue-select :options="options4" v-model="model4"
+                  :format-output="(selection) => selection.map(item => item.content.value)"
+                  :external-update="(model, item) => model.indexOf(item.content.value) > -1">
+        <template v-slot:label="{option}">
+          {{ option.content.custom }} - {{ option.isSelected }}
+        </template>
+        <template v-slot:option="{option}">
+          {{ option.content.custom }} - {{ option.isSelected }}
+        </template>
+      </vue-select>
+      {{ model4 }}
+      <button @click="setSelection">Set selection</button>
+    </div>
   </div>
 </template>
 
@@ -91,7 +107,23 @@ export default {
           value: 'value-3'
         }
       ],
-      model3: []
+      model3: [],
+
+      options4: [
+        {
+          custom: 'Value 1',
+          value: 'value-1'
+        },
+        {
+          custom: 'Value 2',
+          value: 'value-2'
+        },
+        {
+          custom: 'Value 3',
+          value: 'value-3'
+        }
+      ],
+      model4: ['value-1', 'value-2']
     }
   },
   methods: {

@@ -1,8 +1,19 @@
 <meta charset="utf-8">
-<title>vue-select demo</title>
+<title>VueSelect demo</title>
 <script src="https://unpkg.com/vue"></script>
-<script src="./vue-select.js"></script>
+<script src="./VueSelect.umd.js"></script>
+
+<link rel="stylesheet" href="./VueSelect.css">
 
 
-<vue-select></vue-select>
+<div id="app">
+  <demo :options="[]"></demo>
+</div>
 
+<script>
+new Vue({
+  components: {
+    demo: VueSelect
+  }
+}).$mount('#app')
+</script>

@@ -5,9 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build:example": "vue-cli-service build --dest example",
-    "build" : "vue-cli-service build --target wc --name vue-select src/components/VueSelect.vue --dest lib",
+    "build" : "vue-cli-service build --target lib --name VueSelect src/components/VueSelect.vue --dest lib",
     "lint": "vue-cli-service lint"
   },
+  "main": "lib/",
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11"

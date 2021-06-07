@@ -55,6 +55,8 @@ export default {
   },
   mounted () {
     this.setItems()
+
+    this.restoreSelection()
   },
   computed: {
     selection () {
@@ -65,7 +67,7 @@ export default {
     options () {
       this.setItems()
     },
-    value (value) {
+    value () {
       if (this.changedByInteraction) {
         this.changedByInteraction = false
 

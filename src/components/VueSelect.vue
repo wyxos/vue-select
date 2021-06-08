@@ -1,15 +1,21 @@
 <template>
-  <div>
+  <div
+    v-click-outside="externalClick">
     <div @click="toggleSelect">
       <div v-if="!selection.length">
         Please select
       </div>
       <div v-else>
-        <span v-for="(item, index) in selection" :key="index">
+        <span v-if="selectionLabel">
+          {{ selectionLabel(selection) }}
+        </span>
+        <template v-else>
+          <span v-for="(item, index) in selection" :key="index">
           <slot name="label" v-bind:option="item">
-            {{ item }}
+            {{ item }},
           </slot>
         </span>
+        </template>
       </div>
     </div>
     <div v-if="show">
@@ -43,6 +49,9 @@ export default {
       default (model, item) {
         throw Error('external-update callback undefined on component.')
       }
+    },
+    selectionLabel: {
+      type: Function
     },
     value: {}
   },
@@ -107,6 +116,31 @@ export default {
       this.items.forEach(item => {
         item.isSelected = this.externalUpdate(this.value, item)
       })
+    },
+    externalClick (event) {
+      this.show = false
+    }
+  },
+  directives: {
+    'click-outside': {
+      bind (el, binding) {
+        const { bubble } = binding.modifiers
+        const ua = navigator.userAgent
+        const event = (ua.match(/iPad|iPhone/i)) ? 'touchstart' : 'click'
+        const handler = (e) => {
+          if (bubble || (!el.contains(e.target) && el !== e.target)) {
+            binding.value(e)
+          }
+        }
+        el.vueClickOutside = handler
+        document.addEventListener(event, handler)
+      },
+      unbind (el) {
+        const ua = navigator.userAgent
+        const event = (ua.match(/iPad|iPhone/i)) ? 'touchstart' : 'click'
+        document.removeEventListener(event, el.vueClickOutside)
+        el.vueClickOutside = null
+      }
     }
   }
 }

@@ -48,6 +48,20 @@
       {{ model4 }}
       <button @click="setSelection">Set selection</button>
     </div>
+
+    <p>Example: Custom selection label</p>
+    <div>
+      <vue-select :options="options4" v-model="model4"
+                  :format-output="(selection) => selection.map(item => item.content.value)"
+                  :external-update="(model, item) => model.indexOf(item.content.value) > -1"
+                  :selection-label="(selection) => selection.map(item => item.content.value).join(', ')">
+        <template v-slot:option="{option}">
+          {{ option.content.custom }} - {{ option.isSelected }}
+        </template>
+      </vue-select>
+      {{ model4 }}
+      <button @click="setSelection">Set selection</button>
+    </div>
   </div>
 </template>
 

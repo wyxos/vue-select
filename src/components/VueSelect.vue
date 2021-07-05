@@ -1,9 +1,8 @@
 <template>
-  <div
-    v-click-outside="externalClick">
-    <div @click="toggleSelect">
+  <div v-click-outside="externalClick" class="custom-select">
+    <div @click="toggleSelect" class="selection">
       <div v-if="!selection.length">
-        Please select
+        {{ placeholder }}
       </div>
       <div v-else>
         <span v-if="selectionLabel">
@@ -18,7 +17,7 @@
         </template>
       </div>
     </div>
-    <div v-if="show">
+    <div v-if="show" class="dropdown">
       <ul>
         <li v-for="(item, index) in items"
             :class="{active: item.isSelected}"
@@ -40,6 +39,10 @@ export default {
     options: {
       required: true,
       type: Array
+    },
+    placeholder: {
+      type: String,
+      default: 'Please select'
     },
     formatOutput: {
       type: Function

@@ -1,5 +1,5 @@
 <template>
-  <div v-click-outside="externalClick" class="custom-select">
+  <div v-click-outside="externalClick" class="custom-select" :class="{disabled: disabled}">
     <div @click="toggleSelect" class="selection">
       <div v-if="!selection.length">
         {{ placeholder }}
@@ -36,6 +36,10 @@
 export default {
   name: 'VueSelect',
   props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     options: {
       required: true,
       type: Array
@@ -113,6 +117,10 @@ export default {
       this.changedByInteraction = true
     },
     toggleSelect () {
+      if (this.disabled) {
+        return
+      }
+
       this.show = !this.show
     },
     restoreSelection () {
